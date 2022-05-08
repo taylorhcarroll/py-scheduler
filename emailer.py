@@ -1,5 +1,5 @@
 import smtplib
-
+from email.mime.text import MIMEText
 
 def sendEmail(sender_email, password, to, subject, msg):
     try:
@@ -7,10 +7,14 @@ def sendEmail(sender_email, password, to, subject, msg):
         server.starttls()
         server.login(sender_email, password)
 
-        message = f'From: {sender_email}\nTo: {to}\nSubject: {subject}\n\n{msg}'
+        message = MIMEText('{msg}')
+        # message = f'From: {sender_email}\nTo: {to}\nSubject: {subject}\n\n{msg}'
+        message['Subject'] = subject
+        message['From'] = sender_email
+        message['To'] = to
         print(message)
 
-        server.sendmail(sender_email, to, message)
+        server.sendmail(sender_email, to, message.as_string())
         server.quit()
         print("Email Sent")
     except:

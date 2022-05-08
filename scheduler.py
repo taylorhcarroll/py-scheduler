@@ -19,10 +19,12 @@ def job2():
 def job3():
     print("Hello")
 
+# unfortunately, these emails end up in your spam folder :(
 def job4():
+    print("Email is in transit")
     sendEmail(SENDER_EMAIL, PASSWORD, TO, SUBJECT, MESSAGE)
 
-schedule.every(5).seconds.do(job)
+schedule.every(5).seconds.do(job4)
 # some other variations 
 schedule.every().hour.do(job)
 # by default, the schedule module uses the 24hr format
