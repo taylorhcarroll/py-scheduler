@@ -6,6 +6,12 @@ import os
 root = tk.TK()
 apps = []
 
+if os.path.isfile('save.txt'):
+    with open('save.txt', 'r') as f:
+        tempApps = f.read()
+        tempApps = tempApps.split(',') 
+        apps = [x for x in tempApps if x.strip()]
+
 canvas = tk.Canvas(root, height=700, width=700, bg="#263D42")
 canvas.pack()
 
@@ -45,6 +51,18 @@ runApps = tk.Button(root, text="Run Apps", padx=10, pady=5,
 runApps.pack()
 
 
+# populate initial apps that were saved to list
+# for now to delete, can delete text file, will need to add clear func
+for app in apps:
+    label = tk.Label(frame, text=app)
+    label.pack()
 # this will run whole app
 root.mainloop()
+
+
+# whenever we close apps, it saves to txt file and attach command to file
+# basically relaunches old session
+with open('save.txt', 'w') as f:
+    for app in apps:
+        f.write(app + ',')
 
